@@ -96,8 +96,14 @@ section {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+#chart-container {
+    min-height: 40vh; /* Set a minimum height of 40% of the viewport height */
+}
+
 #time-range-buttons {
     margin-bottom: 20px;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent wrapping */
 }
 
 #time-range-buttons button {
@@ -108,6 +114,7 @@ section {
     color: #fff;
     cursor: pointer;
     border-radius: 5px;
+    display: inline-block; /* Ensure buttons are inline */
 }
 
 #time-range-buttons button:hover {
@@ -206,21 +213,20 @@ footer p {
 
     #time-range-buttons {
         display: flex;
-        flex-direction: column;
+        flex-direction: row; /* Ensure buttons are in a row */
         align-items: center;
+        overflow-x: auto; /* Enable horizontal scrolling */
+        white-space: nowrap; /* Prevent wrapping */
     }
 
     #time-range-buttons button {
-        margin-bottom: 10px;
-        width: 100%;
+        margin-bottom: 0; /* Remove bottom margin */
+        width: auto; /* Ensure buttons do not stretch */
     }
 
     #time-range-buttons label {
-        margin-top: 10px;
+        margin-top: 0; /* Remove top margin */
     }
 
-    #aioliChart {
-        width: 100% !important;
-        height: auto !important;
-    }
+
 }

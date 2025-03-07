@@ -143,6 +143,7 @@ function initializeChart() {
             ]
         },
         options: {
+           maintainAspectRatio: false,
             responsive: true,
             scales: {
                 x: {
@@ -162,9 +163,18 @@ function initializeChart() {
                 },
                 y: {
                     beginAtZero: true,
+                    min: 0, // Ensure y-axis does not go below 0
                     title: {
                         display: window.innerWidth > 768, // Hide y-axis title on small screens
                         text: 'Price (€)'
+                    },
+                    ticks: {
+                        callback: function(value) {
+                            if (window.innerWidth <= 768) {
+                                return value >= 1000 ? (value / 1000) + 'k' : value;
+                            }
+                            return value;
+                        }
                     }
                 }
             },
@@ -186,25 +196,29 @@ function setTimeRange(range) {
         case 'month':
             startDate.setMonth(startDate.getMonth() - 1);
             forecastEndDate.setDate(endDate.getDate() + 7); // 1 week of forecasting
+            chart.options.scales.x.time.displayFormats.day = 'MMM dd'; // Set x-axis format for month
             fetchData(startDate, endDate, forecastEndDate, '1h');
             break;
         case 'year':
             startDate.setFullYear(startDate.getFullYear() - 1);
             forecastEndDate.setMonth(endDate.getMonth() + 3); // 3 months of forecasting
+            chart.options.scales.x.time.displayFormats.day = 'MMM, yy'; // Set x-axis format for other ranges
             fetchData(startDate, endDate, forecastEndDate, '6h');
             break;
         case '5y':
             startDate.setFullYear(startDate.getFullYear() - 5);
             forecastEndDate.setMonth(endDate.getMonth() + 6); // 6 months of forecasting
+            chart.options.scales.x.time.displayFormats.day = 'MMM, yy'; // Set x-axis format for other ranges
             fetchData(startDate, endDate, forecastEndDate, '1d');
             break;
         case 'max':
             startDate = new Date('2018-01-07');
             forecastEndDate.setMonth(endDate.getMonth() + 6); // 6 months of forecasting
+            chart.options.scales.x.time.displayFormats.day = 'MMM, yy'; // Set x-axis format for other ranges
             fetchData(startDate, endDate, forecastEndDate, '1d');
             break;
     }
-}
+    }
 
 function fetchData(startDate, endDate, forecastEndDate, frequency) {
     currentStartDate = startDate;
@@ -221,16 +235,15 @@ function fetchData(startDate, endDate, forecastEndDate, frequency) {
             fetch(forecastUrl).then(response => response.json())
         ]).then(([historicData, forecastData]) => {
             updateChart(historicData, forecastData);
-            updateIndexCards(historicData, forecastData);
         });
     } else {
         fetch(historicUrl)
             .then(response => response.json())
             .then(historicData => {
                 updateChart(historicData, []);
-                updateIndexCards(historicData, []);
             });
     }
+    
 }
 
 function updateChart(historicData, forecastData) {
@@ -252,25 +265,7 @@ function updateChart(historicData, forecastData) {
     chart.update('none'); // Update the chart without animation
 }
 
-function updateIndexCards(historicData, forecastData) {
-    const latestData = historicData[historicData.length - 1];
-    const previousData = historicData[historicData.length - 2];
 
-    const currentIndex = latestData.index;
-    const monthlyChangeAbs = latestData.index - previousData.index;
-    const monthlyChangeRel = ((latestData.index - previousData.index) / previousData.index) * 100;
-
-    document.getElementById('current-index').textContent = `${currentIndex.toFixed(2)} €/ton`;
-    document.getElementById('monthly-change-abs').textContent = `${monthlyChangeAbs >= 0 ? '+' : ''}${monthlyChangeAbs.toFixed(2)} €/ton`;
-    document.getElementById('monthly-change-rel').textContent = `${monthlyChangeRel >= 0 ? '+' : ''}${monthlyChangeRel.toFixed(2)}%`;
-
-    if (forecastData.length > 0) {
-        const priceTarget = forecastData[forecastData.length - 1].index;
-        document.getElementById('price-target').textContent = `${priceTarget.toFixed(2)} €/ton`;
-    } else {
-        document.getElementById('price-target').textContent = 'N/A';
-    }
-}
 
 function fetchCardData() {
     fetch('/api/cards')
