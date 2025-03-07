@@ -62,7 +62,8 @@ header h1 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 23%;
     text-align: center;
-    margin-right: 1%;
+    margin: 5px;
+    margin-bottom: 20px;
 }
 
 .card:last-child {
@@ -189,4 +190,37 @@ footer {
 
 footer p {
     margin: 0;
+}
+
+/* Media Queries for Mobile Devices */
+@media (max-width: 768px) {
+    .index-cards {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 90%;
+        margin-right: 0;
+    }
+
+    #time-range-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #time-range-buttons button {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    #time-range-buttons label {
+        margin-top: 10px;
+    }
+
+    #aioliChart {
+        width: 100% !important;
+        height: auto !important;
+    }
 }

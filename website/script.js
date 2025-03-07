@@ -39,7 +39,10 @@ function initializeChart() {
                     tension: 0.1,
                     borderDash: [5, 5],
                     pointRadius: 0,
-                    pointHoverRadius: 5
+                    pointHoverRadius: 5,
+                    legend: {
+                        display: false
+                    }
                 },
                 {
                     label: 'Olive Oil Cost (Historic)',
@@ -60,7 +63,10 @@ function initializeChart() {
                     tension: 0.1,
                     borderDash: [5, 5],
                     pointRadius: 0,
-                    pointHoverRadius: 5
+                    pointHoverRadius: 5,
+                    legend: {
+                        display: false
+                    }
                 },
                 {
                     label: 'Eggs Cost (Historic)',
@@ -81,7 +87,10 @@ function initializeChart() {
                     tension: 0.1,
                     borderDash: [5, 5],
                     pointRadius: 0,
-                    pointHoverRadius: 5
+                    pointHoverRadius: 5,
+                    legend: {
+                        display: false
+                    }
                 },
                 {
                     label: 'Garlic Cost (Historic)',
@@ -102,7 +111,10 @@ function initializeChart() {
                     tension: 0.1,
                     borderDash: [5, 5],
                     pointRadius: 0,
-                    pointHoverRadius: 5
+                    pointHoverRadius: 5,
+                    legend: {
+                        display: false
+                    }
                 },
                 {
                     label: 'Energy Cost (Historic)',
@@ -123,7 +135,10 @@ function initializeChart() {
                     tension: 0.1,
                     borderDash: [5, 5],
                     pointRadius: 0,
-                    pointHoverRadius: 5
+                    pointHoverRadius: 5,
+                    legend: {
+                        display: false
+                    }
                 }
             ]
         },
@@ -148,11 +163,16 @@ function initializeChart() {
                 y: {
                     beginAtZero: true,
                     title: {
-                        display: true,
+                        display: window.innerWidth > 768, // Hide y-axis title on small screens
                         text: 'Price (€)'
                     }
                 }
             },
+            plugins: {
+                legend: {
+                    display: window.innerWidth > 768 // Hide legend on small screens
+                }
+            }
         }
     });
 }
@@ -190,8 +210,8 @@ function fetchData(startDate, endDate, forecastEndDate, frequency) {
     currentStartDate = startDate;
     currentEndDate = endDate;
 
-    const historicUrl = `http://localhost:5000/api/historic?start_date=${startDate.toISOString()}&end_date=${endDate.toISOString()}&frequency=${frequency}`;
-    const forecastUrl = `http://localhost:5000/api/forecast?end_date=${forecastEndDate.toISOString()}&frequency=${frequency}`;
+    const historicUrl = `/api/historic?start_date=${startDate.toISOString()}&end_date=${endDate.toISOString()}&frequency=${frequency}`;
+    const forecastUrl = `/api/forecast?end_date=${forecastEndDate.toISOString()}&frequency=${frequency}`;
 
     const showForecast = document.getElementById('forecastCheckbox').checked;
 
@@ -236,17 +256,30 @@ function updateIndexCards(historicData, forecastData) {
     const latestData = historicData[historicData.length - 1];
     const previousData = historicData[historicData.length - 2];
 
-   
+    const currentIndex = latestData.index;
+    const monthlyChangeAbs = latestData.index - previousData.index;
+    const monthlyChangeRel = ((latestData.index - previousData.index) / previousData.index) * 100;
+
+    document.getElementById('current-index').textContent = `${currentIndex.toFixed(2)} €/ton`;
+    document.getElementById('monthly-change-abs').textContent = `${monthlyChangeAbs >= 0 ? '+' : ''}${monthlyChangeAbs.toFixed(2)} €/ton`;
+    document.getElementById('monthly-change-rel').textContent = `${monthlyChangeRel >= 0 ? '+' : ''}${monthlyChangeRel.toFixed(2)}%`;
+
+    if (forecastData.length > 0) {
+        const priceTarget = forecastData[forecastData.length - 1].index;
+        document.getElementById('price-target').textContent = `${priceTarget.toFixed(2)} €/ton`;
+    } else {
+        document.getElementById('price-target').textContent = 'N/A';
+    }
 }
 
 function fetchCardData() {
-    fetch('http://localhost:5000/api/cards')
+    fetch('/api/cards')
         .then(response => response.json())
         .then(data => {
-            document.getElementById('current-index').textContent = `${data.current_index.toFixed(2)} €/tonne`;
-            document.getElementById('monthly-change-abs').textContent = `${data.monthly_change_abs >= 0 ? '+' : ''}${data.monthly_change_abs.toFixed(2)} €/tonne`;
+            document.getElementById('current-index').textContent = `${data.current_index.toFixed(2)} €/ton`;
+            document.getElementById('monthly-change-abs').textContent = `${data.monthly_change_abs >= 0 ? '+' : ''}${data.monthly_change_abs.toFixed(2)} €/ton`;
             document.getElementById('monthly-change-rel').textContent = `${data.monthly_change_rel >= 0 ? '+' : ''}${data.monthly_change_rel.toFixed(2)}%`;
-            document.getElementById('price-target').textContent = `${data.price_target.toFixed(2)} €/tonne`;
+            document.getElementById('price-target').textContent = `${data.price_target.toFixed(2)} €/ton`;
         });
 }
 
