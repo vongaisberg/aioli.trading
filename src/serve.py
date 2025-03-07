@@ -10,9 +10,9 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # Load data
 historic_data = pd.read_csv(
-    '/home/max/git/aioli.trading/historic.csv', parse_dates=['date'])
+    'historic.csv', parse_dates=['date'])
 forecast_data = pd.read_csv(
-    '/home/max/git/aioli.trading/forecast.csv', parse_dates=['date'])
+    'forecast.csv', parse_dates=['date'])
 
 
 def filter_and_resample(data, start_date, end_date, frequency):
