@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8000
 
 # Command to run the application
-CMD ["gunicorn", "-c", "gunicorn_config.py", "src.serve:app"]
+CMD ["gunicorn", "-c", "src/gunicorn_config.py", "src.serve:app"]
