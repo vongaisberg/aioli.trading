@@ -1,7 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     fetchNewsArticles();
     initializeChart();
-    setTimeRange('month'); // Default to month
+    setTimeRange('5y'); // Default to 5 years
+    fetchCardData(); // Fetch card data on load
+});
+
+document.getElementById('forecastCheckbox').addEventListener('change', function() {
+    fetchData(currentStartDate, currentEndDate, new Date(currentEndDate.getTime() + 7 * 24 * 60 * 60 * 1000), '1h');
 });
 
 let chart;
@@ -44,7 +49,8 @@ function initializeChart() {
                     fill: false,
                     tension: 0.1,
                     pointRadius: 0,
-                    pointHoverRadius: 5                },
+                    pointHoverRadius: 5
+                },
                 {
                     label: 'Olive Oil Cost (Forecast)',
                     data: [],
@@ -195,12 +201,14 @@ function fetchData(startDate, endDate, forecastEndDate, frequency) {
             fetch(forecastUrl).then(response => response.json())
         ]).then(([historicData, forecastData]) => {
             updateChart(historicData, forecastData);
+            updateIndexCards(historicData, forecastData);
         });
     } else {
         fetch(historicUrl)
             .then(response => response.json())
             .then(historicData => {
                 updateChart(historicData, []);
+                updateIndexCards(historicData, []);
             });
     }
 }
@@ -222,6 +230,24 @@ function updateChart(historicData, forecastData) {
     chart.data.datasets[9].data = forecastData.map(item => ({ x: new Date(item.date), y: item.energy_cost }));
 
     chart.update('none'); // Update the chart without animation
+}
+
+function updateIndexCards(historicData, forecastData) {
+    const latestData = historicData[historicData.length - 1];
+    const previousData = historicData[historicData.length - 2];
+
+   
+}
+
+function fetchCardData() {
+    fetch('http://localhost:5000/api/cards')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('current-index').textContent = `${data.current_index.toFixed(2)} €/tonne`;
+            document.getElementById('monthly-change-abs').textContent = `${data.monthly_change_abs >= 0 ? '+' : ''}${data.monthly_change_abs.toFixed(2)} €/tonne`;
+            document.getElementById('monthly-change-rel').textContent = `${data.monthly_change_rel >= 0 ? '+' : ''}${data.monthly_change_rel.toFixed(2)}%`;
+            document.getElementById('price-target').textContent = `${data.price_target.toFixed(2)} €/tonne`;
+        });
 }
 
 function fetchNewsArticles() {

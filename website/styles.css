@@ -9,8 +9,8 @@ body {
 header {
     background-color: #333;
     color: #fff;
-    padding: 10px 0;
-    text-align: center;
+    padding: 10px 20px;
+    text-align: left;
 }
 
 header nav ul {
@@ -29,9 +29,55 @@ header nav ul li a {
     font-weight: bold;
 }
 
+.title-container {
+    margin: 20px 0;
+}
+
 header h1 {
     margin: 0;
-    font-size: 2em;
+    font-size: 2.5em;
+    font-family: 'Georgia', serif;
+    letter-spacing: 1px;
+}
+
+.subtitle {
+    margin: 0;
+    font-size: 1.2em;
+    font-family: 'Arial', sans-serif;
+    font-weight: normal;
+    color: #ccc;
+}
+
+.index-cards {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.card {
+    background-color: #fff;
+    color: #333;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 23%;
+    text-align: center;
+    margin-right: 1%;
+}
+
+.card:last-child {
+    margin-right: 0;
+}
+
+.card h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.2em;
+}
+
+.card p {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: bold;
 }
 
 main {
@@ -70,6 +116,65 @@ section {
 #time-range-buttons label {
     margin-left: 20px;
     font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.checkbox-container {
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 16px;
+    user-select: none;
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #333;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
 }
 
 footer {
