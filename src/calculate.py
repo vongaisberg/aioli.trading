@@ -326,7 +326,7 @@ def predict_price(historic_index, periods=6):
     plt.show()
 
 
-if __name__ == '__main__':
+def main():
     start_date = '2018-01-01'
     
     # Today
@@ -339,3 +339,7 @@ if __name__ == '__main__':
                 f"Timestamp: {datetime.fromtimestamp(entry['timestamp'] / 1000)}, Index: {entry['index']:.2f} €/tonne")
         # plot_historic_aioli_index(historic_index)
         predict_price(historic_index, periods=6)
+
+
+if __name__ == '__main__':
+    main()

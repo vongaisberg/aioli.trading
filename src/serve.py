@@ -1,19 +1,45 @@
+import schedule
+import time
+import threading
+import pandas as pd
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
-import pandas as pd
 from datetime import datetime
 import os
+from src.calculate import main as calculate_main
 
 app = Flask(__name__, static_folder='../website')
 # Enable CORS for all routes under /api/*
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-# Load data
-historic_data = pd.read_csv(
-    'historic.csv', parse_dates=['date'])
-forecast_data = pd.read_csv(
-    'forecast.csv', parse_dates=['date'])
+# Global variables to store the data
+historic_data = None
+forecast_data = None
 
+def load_data():
+    global historic_data, forecast_data
+    historic_data = pd.read_csv('historic.csv', parse_dates=['date'])
+    forecast_data = pd.read_csv('forecast.csv', parse_dates=['date'])
+
+def scheduled_task():
+    calculate_main()
+    load_data()
+
+# Schedule the task to run every hour
+schedule.every().hour.do(scheduled_task)
+
+def run_scheduler():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+# Start the scheduler in a separate thread
+scheduler_thread = threading.Thread(target=run_scheduler)
+scheduler_thread.daemon = True
+scheduler_thread.start()
+
+# Load data initially
+load_data()
 
 def filter_and_resample(data, start_date, end_date, frequency):
 
