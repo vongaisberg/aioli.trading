@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aioli Price Index</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#chart-section">Chart</a></li>
+                <li><a href="#news-section">News</a></li>
+                <li><a href="#about-section">About</a></li>
+            </ul>
+        </nav>
+        <h1>Aioli Price Index</h1>
+    </header>
+    <main>
+        <section id="chart-section">
+            <h2>Aioli Price Index Forecast</h2>
+            <div id="time-range-buttons">
+                <button onclick="setTimeRange('month')">Month</button>
+                <button onclick="setTimeRange('year')">Year</button>
+                <button onclick="setTimeRange('5y')">5Y</button>
+                <button onclick="setTimeRange('max')">Max</button>
+                <label class="checkbox-container">
+                    <input type="checkbox" id="forecastCheckbox" checked>
+                    <span class="checkmark"></span>
+                    Show Forecast
+                </label>
+            </div>
+            <canvas id="aioliChart"></canvas>
+        </section>
+        <section id="news-section">
+            <h2>Latest News</h2>
+            <div id="news-articles">
+                <!-- News articles will be dynamically loaded here -->
+            </div>
+        </section>
+        <section id="about-section">
+            <h2>About</h2>
+            <p>Aioli Trading is dedicated to providing accurate and up-to-date information on the aioli price index. Our forecasts help businesses and consumers make informed decisions.</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Aioli Trading. All rights reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
