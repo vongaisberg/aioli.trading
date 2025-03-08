@@ -1,5 +1,5 @@
 import { initializeChart } from './chart.js';
-import { setTimeRange } from './timeRange.js';
+import { setTimeRange as setTimeRangeFunction } from './timeRange.js';
 import { fetchData, getCurrentDates } from './fetchData.js';
 import { fetchCardData } from './cards.js';
 import { fetchNewsArticles } from './news.js';
@@ -7,7 +7,7 @@ import { fetchNewsArticles } from './news.js';
 document.addEventListener('DOMContentLoaded', () => {
   fetchNewsArticles();
   initializeChart();
-  setTimeRange('5y'); // Default to 5 years
+  setTimeRangeFunction('5y'); // Default to 5 years
   fetchCardData();
 });
 
@@ -18,3 +18,6 @@ document.getElementById('forecastCheckbox').addEventListener('change', () => {
     fetchData(currentStartDate, currentEndDate, forecastEndDate, '1h');
   }
 });
+
+// Attach setTimeRange to the window object
+window.setTimeRange = setTimeRangeFunction;

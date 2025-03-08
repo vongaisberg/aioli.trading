@@ -2,37 +2,44 @@
 <html lang="en">
 <head>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-73HYKLV1CF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-73HYKLV1CF');
-</script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-73HYKLV1CF"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-73HYKLV1CF');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Aioli Trading provides accurate and up-to-date information on the aioli price index, helping businesses and consumers make informed decisions.">
     <meta name="keywords" content="Aioli, Price Index, Market Trends, Forecast, Olive Oil, Garlic, Eggs, Energy Cost">
     <meta name="author" content="Aioli Trading">
     <title>Aioli Price Index | Market Trends and Forecasts</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="#chart-section">Chart</a></li>
-                <li><a href="#news-section">News</a></li>
-                <li><a href="#about-section">About</a></li>
-            </ul>
+    <header class="bg-dark text-white py-3">
+        <nav class="navbar navbar-expand-lg navbar-dark container">
+            <a class="navbar-brand" href="#">Aioli Trading</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="#chart-section">Chart</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#news-section">News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about-section">About</a></li>
+                </ul>
+            </div>
         </nav>
-        <div class="title-container">
-            <h1>Aioli Price Index</h1>
-            <h2 class="subtitle">Tracking the Market Trends of Aioli Ingredients</h2>
+        <div class="container text-center">
+            <h1 class="display-4">Aioli Price Index</h1>
+            <p class="lead">Tracking the Market Trends of Aioli Ingredients</p>
         </div>
         <div class="index-cards">
             <div class="card">
@@ -53,38 +60,40 @@
             </div>
         </div>
     </header>
-    <main>
-        <section id="chart-section">
-            <h2>Aioli Price Index Forecast</h2>
-            <div id="time-range-buttons">
-                <button onclick="setTimeRange('month')">Month</button>
-                <button onclick="setTimeRange('year')">Year</button>
-                <button onclick="setTimeRange('5y')">5Y</button>
-                <button onclick="setTimeRange('max')">Max</button>
-                <label class="checkbox-container">
-                    <input type="checkbox" id="forecastCheckbox" checked>
-                    <span class="checkmark"></span>
-                    Show Forecast
-                </label>
+    <main class="container my-5">
+        <section id="chart-section" class="mb-5">
+            <h2 class="mb-4">Aioli Price Index Forecast</h2>
+            <div id="time-range-buttons" class="btn-group mb-3" role="group">
+                <button class="btn btn-outline-primary" onclick="setTimeRange('month')">Month</button>
+                <button class="btn btn-outline-primary" onclick="setTimeRange('year')">Year</button>
+                <button class="btn btn-outline-primary" onclick="setTimeRange('5y')">5Y</button>
+                <button class="btn btn-outline-primary" onclick="setTimeRange('max')">Max</button>
+                <div class="form-check form-check-inline ml-3">
+                    <input class="form-check-input" type="checkbox" id="forecastCheckbox" checked>
+                    <label class="form-check-label" for="forecastCheckbox">Show Forecast</label>
+                </div>
             </div>
-            <div id="chart-container">
+            <div id="chart-container" class="mb-5">
                 <canvas id="aioliChart"></canvas>
             </div>
         </section>
-        <section id="news-section">
-            <h2>Latest News</h2>
+        <section id="news-section" class="mb-5">
+            <h2 class="mb-4">Latest News</h2>
             <div id="news-articles">
                 <!-- News articles will be dynamically loaded here -->
             </div>
         </section>
         <section id="about-section">
-            <h2>About Aioli Trading</h2>
+            <h2 class="mb-4">About Aioli Trading</h2>
             <p>Aioli Trading is dedicated to providing accurate and up-to-date information on the aioli price index. Our forecasts help businesses and consumers make informed decisions.</p>
         </section>
     </main>
-    <footer>
+    <footer class="bg-dark text-white py-3 text-center">
         <p>&copy; 2025 Aioli Trading. All rights reserved.</p>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="module" src="main.js"></script>
 </body>
 </html>
