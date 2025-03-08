@@ -199,6 +199,33 @@ footer p {
     margin: 0;
 }
 
+#news-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.news-article {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.news-article h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.news-article p {
+    margin: 0;
+    font-size: 1em;
+    color: #666;
+}
+
 /* Media Queries for Mobile Devices */
 @media (max-width: 768px) {
     .index-cards {
@@ -227,6 +254,5 @@ footer p {
     #time-range-buttons label {
         margin-top: 0; /* Remove top margin */
     }
-
 
 }
