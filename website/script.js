@@ -1,6 +1,6 @@
-const { initializeChart, updateChart } = require("./chart");
-const { fetchData, fetchCardData, setTimeRange } = require("./data");
-const { fetchNewsArticles } = require("./news");
+import { initializeChart, updateChart } from "./chart.js";
+import { fetchData, fetchCardData, setTimeRange } from "./data.js";
+import { fetchNewsArticles } from "./news.js";
 
 document.addEventListener('DOMContentLoaded', function() {
     fetchNewsArticles();
@@ -14,13 +14,13 @@ document.getElementById('forecastCheckbox').addEventListener('change', function(
 });
 
 let chart;
-exports.chart = chart;
+export { chart };
 let currentStartDate;
-exports.currentStartDate = currentStartDate;
+export { currentStartDate };
 let currentEndDate;
-exports.currentEndDate = currentEndDate;
+export { currentEndDate };
 
-exports.updateChart = updateChart;
+export { updateChart };
 
 
 
