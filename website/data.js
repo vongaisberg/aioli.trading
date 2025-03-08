@@ -1,6 +1,4 @@
-const { currentStartDate, currentEndDate, updateChart, chart } = require("./script");
-
-function fetchData(startDate, endDate, forecastEndDate, frequency) {
+export function fetchData(startDate, endDate, forecastEndDate, interval) {
     currentStartDate = startDate;
     currentEndDate = endDate;
 
@@ -23,9 +21,9 @@ function fetchData(startDate, endDate, forecastEndDate, frequency) {
                 updateChart(historicData, []);
             });
     }
-
 }
-exports.fetchData = fetchData;function fetchCardData() {
+
+export function fetchCardData() {
     fetch('/api/cards')
         .then(response => response.json())
         .then(data => {
@@ -35,8 +33,8 @@ exports.fetchData = fetchData;function fetchCardData() {
             document.getElementById('price-target').textContent = `${data.price_target.toFixed(2)} €/ton`;
         });
 }
-exports.fetchCardData = fetchCardData;
-function setTimeRange(range) {
+
+export function setTimeRange(range) {
     let startDate = new Date();
     let endDate = new Date();
     let forecastEndDate = new Date();
@@ -68,5 +66,4 @@ function setTimeRange(range) {
             break;
     }
 }
-exports.setTimeRange = setTimeRange;
 
