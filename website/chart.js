@@ -1,6 +1,4 @@
-const { chart } = require("./script");
-
-function initializeChart() {
+export function initializeChart() {
     const ctx = document.getElementById('aioliChart').getContext('2d');
     chart = new Chart(ctx, {
         type: 'line',
@@ -173,7 +171,8 @@ function initializeChart() {
         }
     });
 }
-exports.initializeChart = initializeChart;function updateChart(historicData, forecastData) {
+
+export function updateChart(historicData, forecastData) {
     const historicLabels = historicData.map(item => new Date(item.date));
     const forecastLabels = forecastData.map(item => new Date(item.date));
 
